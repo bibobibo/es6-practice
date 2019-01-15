@@ -1,84 +1,95 @@
 <template>
   <main class="main">
     <section class="avatar">
-      <img class="avatar__image" alt="avatar" :src="avatarLink">
+      <img
+        class="avatar__image"
+        alt="avatar"
+        :src="avatarLink"
+      >
     </section>
 
     <section class="members">
-      <ul>
+      <ul class="member-list">
         <li
           v-for="member in members"
           :key="member.name"
-        >{{member.name}} {{member.relationship}} {{member.status}}</li>
+        >
+          {{ member.name }} {{ member.relationship }} {{ member.status }}
+        </li>
       </ul>
     </section>
 
-    <div v-show="isLoading" class="loading"></div>
+    <div
+      v-show="isLoading"
+      class="loading"
+    />
   </main>
 </template>
 
 <script>
-import { getAvatar, getMembers } from "./service";
+import { getAvatar, getMembers } from './service'
 
 export default {
-  name: "app",
+  name: 'App',
 
   data() {
     return {
-      avatarLink: "https://discovery-park.co.uk/wp-content/uploads/2017/06/avatar-default.png",
+      avatarLink: 'https://discovery-park.co.uk/wp-content/uploads/2017/06/avatar-default.png',
       members: [],
       isLoading: false
-    };
+    }
   },
 
   mounted() {
-    var self = this;
+    var self = this
 
-    self.showLoading();
+    self.showLoading()
 
     self.loadAavtar(
       function(avatarLink) {
-        self.avatarLink = avatarLink;
+        self.avatarLink = avatarLink
 
         self.loadMembers(
           function(members) {
-            self.members = members;
+            self.members = members
 
-            self.hideLoading();
+            self.hideLoading()
           },
           function(errorMessage) {
-            alert(errorMessage);
+            self.hideLoading()
+            alert(errorMessage)
           }
-        );
+        )
       },
       function(errorMessage) {
-        alert(errorMessage);
+        self.hideLoading()
+        alert(errorMessage)
       }
-    );
+    )
   },
 
   methods: {
     showLoading: function() {
-      this.isLoading = true;
+      this.isLoading = true
     },
 
     hideLoading: function() {
-      this.isLoading = false;
+      this.isLoading = false
     },
 
     loadAavtar: function(success, error) {
-      getAvatar("url to get avatar", success, error);
+      getAvatar('./url-to-get-avatar.do', success, error)
     },
 
     loadMembers: function(success, error) {
-      getMembers("url to get members", success, error);
+      getMembers('./url-to-get-members.do', success, error)
     }
   }
-};
+}
 </script>
 
 <style>
-ul {
+.member-list {
   padding-left: 0;
   list-style: none;
 }

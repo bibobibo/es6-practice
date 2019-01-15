@@ -76,27 +76,20 @@ export default {
 
     self.showLoading()
 
-    self.loadAavtar(
-      function(avatarLink) {
-        self.avatarLink = avatarLink
+    let loadAvatarPromise = self.loadAavtar().then(function(avatarLink) {
+      self.avatarLink = avatarLink
+    })
 
-        self.loadMembers(
-          function(members) {
-            self.members = members
+    let loadMembersPromise = self.loadMembers().then(function(members) {
+      self.members = members
+    })
 
-            self.hideLoading()
-          },
-          function(errorMessage) {
-            self.hideLoading()
-            alert(errorMessage)
-          }
-        )
-      },
-      function(errorMessage) {
-        self.hideLoading()
+    Promise.all([loadAvatarPromise, loadMembersPromise])
+      .catch(function(errorMessage) {
         alert(errorMessage)
-      }
-    )
+      }).finally(function() {
+        self.hideLoading()
+      })
   },
 
   methods: {
@@ -108,14 +101,19 @@ export default {
       this.isLoading = false
     },
 
-    loadAavtar: function(success, error) {
+    loadAavtar: function() {
       const url = `${hosts.imageServer}action-to-get-avatar.do?userId=${this.user.id}`
-      getAvatar(url, success, error)
+      return new Promise(function(resolve, reject) {
+        getAvatar(url, resolve, reject)
+      })
     },
 
-    loadMembers: function(success, error) {
+    loadMembers: function() {
       const url = `${hosts.pmobileServer}action-to-get-members.do?userId=${this.user.id}`
-      getMembers(url, success, error)
+
+      return new Promise(function(resolve, reject) {
+        getMembers(url, resolve, reject)
+      })
     }
   }
 }

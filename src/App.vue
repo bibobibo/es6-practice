@@ -76,20 +76,13 @@ export default {
 
     self.showLoading()
 
-    let loadAvatarPromise = self.loadAavtar().then(function(avatarLink) {
-      self.avatarLink = avatarLink
-    })
-
-    let loadMembersPromise = self.loadMembers().then(function(members) {
-      self.members = members
-    })
-
-    Promise.all([loadAvatarPromise, loadMembersPromise])
-      .catch(function(errorMessage) {
-        alert(errorMessage)
-      }).finally(function() {
-        self.hideLoading()
+    Promise.all([self.loadAavtar(), self.loadMembers()])
+      .then(function([avatarLink, members]) {
+        self.avatarLink = avatarLink
+        self.members = members
       })
+      .catch(alert)
+      .finally(self.hideLoading)
   },
 
   methods: {

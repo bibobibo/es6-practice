@@ -1,9 +1,9 @@
-var getAvatar = function (url, success, error) {
+const getAvatar = function (url, success, error) {
   console.log('send request to url:', url)
 
   setTimeout(function () {
-    var random = Math.random()
-    var avatarLink = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIpbMm03sA6nm5sj597PrJR0V6L4QvEsvKY8Q3i3lBehtyKDA2YQ'
+    const random = Math.random()
+    const avatarLink = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIpbMm03sA6nm5sj597PrJR0V6L4QvEsvKY8Q3i3lBehtyKDA2YQ'
 
     if (random < 0.005) {
       error('error message from getAvatar')
@@ -13,12 +13,12 @@ var getAvatar = function (url, success, error) {
   }, 1000)
 }
 
-var getMembers = function (url, success, error) {
+const getMembers = function (url, success, error) {
   console.log('send request to url:', url)
   
   setTimeout(function () {
-    var random = Math.random()
-    var members = [
+    const random = Math.random()
+    const members = [
       {
         name: '王大锤',
         relationship: '亲属',

@@ -49,9 +49,9 @@ export default {
   computed: {
     groupedMembers: function() {
       //将成员按照和户主的关系分组
-      var groupedByRelationship = {}
-      for(var i = 0; i < this.members.length; i++) {
-        var relationship = this.members[i].relationship
+      const groupedByRelationship = {}
+      for(let i = 0; i < this.members.length; i++) {
+        const relationship = this.members[i].relationship
 
         if(!groupedByRelationship[relationship]) {
           groupedByRelationship[relationship] = []
@@ -61,9 +61,9 @@ export default {
       }
 
       //将分组后的对象重新转化为数组
-      var groupedMembers = []
-      var values = Object.values(groupedByRelationship)
-      for(var j = 0; j < values.length; j++) {
+      let groupedMembers = []
+      const values = Object.values(groupedByRelationship)
+      for(let j = 0; j < values.length; j++) {
         groupedMembers = groupedMembers.concat(values[j])
       }
 
@@ -72,7 +72,7 @@ export default {
   },
 
   mounted() {
-    var self = this
+    const self = this
 
     self.showLoading()
 
@@ -109,12 +109,12 @@ export default {
     },
 
     loadAavtar: function(success, error) {
-      var url = hosts.imageServer + 'action-to-get-avatar.do?userId=' + this.user.id
+      const url = hosts.imageServer + 'action-to-get-avatar.do?userId=' + this.user.id
       getAvatar(url, success, error)
     },
 
     loadMembers: function(success, error) {
-      var url = hosts.pmobileServer + 'action-to-get-members.do?userId=' + this.user.id
+      const url = hosts.pmobileServer + 'action-to-get-members.do?userId=' + this.user.id
       getMembers(url, success, error)
     }
   }

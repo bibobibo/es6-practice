@@ -1,6 +1,7 @@
 <template>
   <main class="main">
     <section class="avatar">
+      <p>家庭账户户主: {{ user.name }}</p>
       <img
         class="avatar__image"
         alt="avatar"
@@ -11,7 +12,7 @@
     <section class="members">
       <ul class="member-list">
         <li
-          v-for="member in members"
+          v-for="member in groupedMembers"
           :key="member.name"
         >
           {{ member.name }} {{ member.relationship }} {{ member.status }}
@@ -28,15 +29,45 @@
 
 <script>
 import { getAvatar, getMembers } from './service'
+import hosts from './hosts'
 
 export default {
   name: 'App',
 
   data() {
     return {
+      user: {
+        id: 2,
+        name: '王小二'
+      },
       avatarLink: 'https://discovery-park.co.uk/wp-content/uploads/2017/06/avatar-default.png',
       members: [],
       isLoading: false
+    }
+  },
+
+  computed: {
+    groupedMembers: function() {
+      //将成员按照和户主的关系分组
+      var groupedByRelationship = {}
+      for(var i = 0; i < this.members.length; i++) {
+        var relationship = this.members[i].relationship
+
+        if(!groupedByRelationship[relationship]) {
+          groupedByRelationship[relationship] = []
+        }
+        
+        groupedByRelationship[relationship].push(this.members[i])
+      }
+
+      //将分组后的对象重新转化为数组
+      var groupedMembers = []
+      var values = Object.values(groupedByRelationship)
+      for(var j = 0; j < values.length; j++) {
+        groupedMembers = groupedMembers.concat(values[j])
+      }
+
+      return groupedMembers
     }
   },
 
@@ -78,11 +109,13 @@ export default {
     },
 
     loadAavtar: function(success, error) {
-      getAvatar('./url-to-get-avatar.do', success, error)
+      var url = hosts.imageServer + 'action-to-get-avatar.do?userId=' + this.user.id
+      getAvatar(url, success, error)
     },
 
     loadMembers: function(success, error) {
-      getMembers('./url-to-get-members.do', success, error)
+      var url = hosts.pmobileServer + 'action-to-get-members.do?userId=' + this.user.id
+      getMembers(url, success, error)
     }
   }
 }

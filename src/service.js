@@ -21,7 +21,7 @@ var getMembers = function (url, success, error) {
     var members = [
       {
         name: '王大锤',
-        relationship: '哥哥',
+        relationship: '亲属',
         status: '已加入'
       },
       {
@@ -33,6 +33,21 @@ var getMembers = function (url, success, error) {
         name: '乔杉',
         relationship: '朋友',
         status: '预加入'
+      },
+      {
+        name: '范伟',
+        relationship: '同事',
+        status: '已加入'
+      },
+      {
+        name: '王二锤',
+        relationship: '亲属',
+        status: '已加入'
+      },
+      {
+        name: '赵本山',
+        relationship: '同事',
+        status: '已加入'
       }
     ]
   

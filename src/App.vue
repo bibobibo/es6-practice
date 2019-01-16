@@ -109,12 +109,12 @@ export default {
     },
 
     loadAavtar: function(success, error) {
-      const url = hosts.imageServer + 'action-to-get-avatar.do?userId=' + this.user.id
+      const url = `${hosts.imageServer}action-to-get-avatar.do?userId=${this.user.id}`
       getAvatar(url, success, error)
     },
 
     loadMembers: function(success, error) {
-      const url = hosts.pmobileServer + 'action-to-get-members.do?userId=' + this.user.id
+      const url = `${hosts.pmobileServer}action-to-get-members.do?userId=${this.user.id}`
       getMembers(url, success, error)
     }
   }
